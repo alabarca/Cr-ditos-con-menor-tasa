@@ -1,0 +1,195 @@
+library(xlsx)
+DATA<-data.frame(read.delim("C:/Users/gchavez/Desktop/DATA1.txt", dec=",", stringsAsFactors=FALSE))
+names(DATA)=c("V1","V2","V3","V4","V5","V6","V7","V8","V9","V10","V11")
+DATA=DATA[order(DATA[,1]),]
+i=0
+j=1
+t=1
+k=1
+bancos=matrix(nrow=dim(DATA)[1],ncol=5*(dim(DATA)[2]-1))
+while(i<(dim(DATA)[2]-1)){
+  colum=as.numeric(as.vector(DATA[,i+2]))
+  box=colum[!colum %in% boxplot.stats(colum)$out]
+  box=sort(box)
+  out_box=colum[colum %in% boxplot.stats(colum)$out]
+  DATA[,i+2]=as.numeric(as.vector(DATA[,i+2]))
+  #a=c("V2","V3","V4","V5","V6","V7","V8","V9","V10","V11")
+  
+  if(i==0){
+  while(j<length(box)+1){
+    bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V2==box[j])[1]))
+    j=j+1
+  }
+  if(length(box)!=dim(DATA)[1]){
+  j=1
+  while(j<length(out_box)+1){
+    bancos[(j+length(box)),(5*i+1)]=as.character(as.vector(subset(DATA,V2==out_box[j])[1]))
+    j=j+1
+  }}}
+  if(i==1){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V3==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V3==out_box[j])[1]))
+      j=j+1
+    }
+  }}
+  if(i==2){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V4==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V4==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==3){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V5==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V5==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==4){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V6==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V6==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==5){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V7==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V7==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==6){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V8==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V8==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==7){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V9==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V9==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==8){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V10==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+    while(j<length(out_box)+1){
+      bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V10==out_box[j])[1]))
+      j=j+1
+    }}}
+  if(i==9){
+    while(j<length(box)+1){
+      bancos[j,(5*i+1)]=as.character(as.vector(subset(DATA,V11==box[j])[1]))
+      j=j+1
+    }
+    if(length(box)!=dim(DATA)[1]){
+    j=1
+  while(j<length(out_box)+1){
+    bancos[j+length(box),(5*i+1)]=as.character(as.vector(subset(DATA,V11==out_box[j])[1]))
+    j=j+1
+  }}}
+  j=1
+  bancos[1:length(box),(5*i+2)]=box
+  if(length(box)!=dim(DATA)[1]){
+  bancos[(length(box)+1):(length(box)+length(out_box)),(5*i+2)]=out_box
+  }
+  m=mean(box)
+  sd=sd(box)
+  norm=pnorm(box,m,sd)
+  bancos[1:length(norm),(5*i+3)]=norm
+  q=quantile(norm,c(0,.10,.20,.30,.40,.50,.60,.70,.80,.90,1))
+  bancos[1:length(q),(5*i+4)]=q
+  while(k<length(box)+1){
+    if(box[k]>(m-sd) & box[k]<m){
+      bancos[k,5*(i+1)]=4
+      k=k+1
+    }
+    if(k<length(box)+1){
+    if(box[k]<(m+sd) & box[k]>m){
+      bancos[k,5*(i+1)]=6
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]>=(m+sd) & box[k]<(m+((3/2)*sd))){
+      bancos[k,5*(i+1)]=7
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]<(m+(2*sd)) & box[k]>=(m+((3/2)*sd))){
+      bancos[k,5*(i+1)]=8
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]>(m-2*sd) & box[k]<(m-((3/2)*sd))){
+      bancos[k,5*(i+1)]=2
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]<=(m-sd) &  box[k]>=(m-((3/2)*sd))){
+      bancos[k,5*(i+1)]=3
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(((box[k]<(m+sd) & box[k]>m)==FALSE) & ((box[k]<(m+sd) & box[k]>m)==FALSE) & box[k]==max(box) & ((box[k]<=(m-sd) &  box[k]>=(m-((3/2)*sd)))==FALSE)& ((box[k]>(m-2*sd) & box[k]<(m-((3/2)*sd)))==FALSE) & ((box[k]<(m+(2*sd)) & box[k]>=(m+((3/2)*sd)))==FALSE) & ((box[k]>=(m+sd) & box[k]<(m+((3/2)*sd)))==FALSE)){
+      bancos[k,5*(i+1)]=10
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(((box[k]<(m+sd) & box[k]>m)==FALSE) & ((box[k]<(m+sd) & box[k]>m)==FALSE) & box[k]==min(box) & ((box[k]<=(m-sd) &  box[k]>=(m-((3/2)*sd)))==FALSE)& ((box[k]>(m-2*sd) & box[k]<(m-((3/2)*sd)))==FALSE) & (((m+(2*sd)) & box[k]>=(m+((3/2)*sd)))==FALSE) & ((box[k]>=(m+sd) & box[k]<(m+((3/2)*sd)))==FALSE)){
+      bancos[k,5*(i+1)]=1
+      k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]>=(m+2*sd) & box[k]<max(box)){
+       bancos[k,5*(i+1)]=9
+       k=k+1
+    }}
+    if(k<length(box)+1){
+    if(box[k]<=(m-2*sd) & box[k]>min(box)){
+      bancos[k,5*(i+1)]=2
+      k=k+1
+    }}
+  }
+  i=i+1
+  k=1
+}
+setwd("C:/Users/gchavez/Desktop")
+write.xlsx(bancos,file="DATA.xls") 
