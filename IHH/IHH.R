@@ -1,0 +1,54 @@
+query1=data.frame(query1[order(query1[,7]),],row.names=NULL)
+producto=as.character(query1$rc_producto_crediticio_codigo)
+etiq=levels(as.factor(producto))
+loop=as.numeric(length(etiq))
+area<- read.delim("C:/Users/igrau/Desktop/Areas cod. productos.txt", header=FALSE,na.strings="++")
+i=1
+j=1
+h=0
+c=c()
+while(i<loop+1){
+  cont1=as.character(as.vector(producto[producto==etiq[i]]))
+  cont2=as.character(as.vector(subset(area,V1==cont1[1])[,2]))
+  h=length(cont1)+h
+  c[j:h]=rep(cont2,length.out=length(cont1))
+  j=h+1
+  i=i+1
+}
+query1=data.frame(query1,rubro=c)
+
+IHH_credito=IHH_cliente=c()
+total_cliente=c()
+fecha=levels(as.factor(query1$fecha_snapshot))
+IHH_area=matrix(ncol=15,nrow=length(fecha))
+loop=as.numeric(length(fecha))
+i=1
+while(i<loop+1){
+  obj=subset(query1,fecha_snapshot==as.Date(fecha[i]))
+  IHH_credito[i]=sum((obj$saldo_capital/sum(obj$saldo_capital))^2)
+  cliente=levels(as.factor(obj$rc_credito_tc_cliente_codigo))
+  loop2=as.numeric(length(cliente))
+  j=1
+  while(j<loop2+1){
+  total_cliente[j]=sum(subset(obj,rc_credito_tc_cliente_codigo==cliente[j])[,8])
+  j=j+1
+  }
+  obj1=data.frame(cliente,total_cliente)
+  IHH_cliente[i]=sum((obj1$total_cliente/sum(obj1$total_cliente))^2)
+  rubro1=levels(as.factor(obj$rubro))
+  loop3=as.numeric(length(rubro))
+  j=1
+  while(j<loop3+1){
+    total=as.numeric(as.vector(subset(obj,rubro==rubro1[j])[,8]))
+    IHH_area[i,j]=sum((total/sum(total))^2)
+    j=j+1
+  }
+  print(i)
+  i=i+1
+  total_cliente=c()
+}
+IHH=data.frame(credito=IHH_credito,cliente=IHH_cliente,IHH_area,row.names=fecha)
+names(IHH)=c("credito","cliente",rubro)
+setwd("C:/Users/igrau/Desktop")
+write.table(IHH,file="IHH.csv",sep=";",dec=",",row.names=TRUE,col.names=TRUE)
+
