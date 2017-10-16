@@ -1,0 +1,174 @@
+maestro=function(ruta1,ruta2,ruta3,ruta4,ruta5){
+CUADRE<-read.csv(ruta1, sep=";", na.strings="++")
+Area<-read.delim(ruta2, header=FALSE, na.strings="++")
+setwd(ruta5)
+CUADRE=data.frame(CUADRE[order(CUADRE[,31]),],row.names=NULL)
+Area=data.frame(Area,row.names=NULL)
+i=1
+etiq=as.vector(levels(CUADRE[,31]))
+cont=as.numeric(length(etiq))
+sum=matrix(nrow=cont,ncol=4)
+Area1=data.frame(matrix(nrow=cont,ncol=3),row.names=NULL)
+sum[,2]=etiq
+while(i<cont+1){
+  Area1[i,1]=as.character(as.vector(subset(Area,V1==etiq[i]))[,1])
+  Area1[i,2]=as.character(as.vector(subset(Area,V1==etiq[i]))[,2])
+  Area1[i,3]=as.character(as.vector(subset(Area,V1==etiq[i]))[,3])
+  i=i+1
+}
+i=1
+j=1
+h=0
+c=c()
+while(i<cont+1){
+  cont1=as.character(as.vector(subset(CUADRE,rc_producto_crediticio_codigo==etiq[i])[,31]))
+  cont2=as.character(as.vector(subset(Area1,X1==cont1[1])[,3]))
+  #if(i==1){
+    h=length(cont1)+h
+  #}else{
+   # h=length(cont)+j
+  #}
+  c[j:h]=rep(cont2,length.out=length(cont1))
+  j=h+1
+  i=i+1
+}
+i=1
+while(i<cont+1){
+  t_prod=as.numeric(as.vector(subset(CUADRE,rc_producto_crediticio_codigo==etiq[i])[,5]))
+  tt_prod=as.character(subset(Area1,X1==etiq[i])[,2])
+  sum[i,1]=sum(t_prod)
+  sum[i,3]=tt_prod
+  i=i+1
+}
+CUADRE=data.frame(CUADRE,V1=c,row.names=NULL)
+CUADRE=data.frame(CUADRE[order(CUADRE[,35]),],row.names=NULL)
+i=1
+while(i<cont+1){
+  tt_prod=as.character(subset(Area1,X1==etiq[i])[,3])
+  sum[i,4]=tt_prod
+  i=i+1
+}
+Area1=data.frame(Area1)
+j=1
+while(j<3){
+if(j==1){
+  etiq=as.vector(levels(Area[,2]))
+}else{
+  etiq=as.vector(levels(as.factor(Area1[,3])))
+}
+#etiq=etiq[2:length(etiq)]
+cont=as.numeric(length(etiq))
+sum2=matrix(nrow=cont,ncol=2)
+sum2[,2]=etiq
+sum=data.frame(sum)
+i=1
+while(i<cont+1){
+  if(j==1){
+  t_prod=as.numeric(as.vector(subset(sum,X3==etiq[i])[,1]))
+  }else{
+    t_prod=as.numeric(as.vector(subset(sum,X4==etiq[i])[,1]))
+  }
+  sum2[i,1]=sum(t_prod)
+  i=i+1
+}
+saldo_total2=sum(as.numeric(sum2[,1]))
+if(j==1){
+write.table(sum2,file='SALDOS RCCC.csv',dec = ".",sep=";", row.names=FALSE)
+}else{
+  write.table(sum2,file='SALDOS RCCC BASILEA.csv',dec = ".",sep=";", row.names=FALSE)
+}
+j=j+1
+}
+Cuentas<- read.delim(ruta3, header=FALSE)
+Cuentas=data.frame(Cuentas[order(Cuentas[,1]),],row.names=NULL)
+library(xlsx)   
+BALANCE=read.xlsx(file=ruta4,1,header=FALSE,stringsAsFactors = FALSE)
+i=3
+while(i<9){
+  BALANCE[,i]=as.numeric(BALANCE[,i])
+  i=i+1
+}
+COLUM1=data.frame(subset(BALANCE,X1=="13134"|X1=="13112"|X1=="13228"|X1=="133051010112"|X1=="13302"|X1=="131051010112"|X1=="13108"|X1=="131021000002"|X1=="13103"|X1=="13203"|X1=="13303"
+                         |X1=="13403"|X1=="131041000001"|X1=="131041000005"|
+                           X1=="13204"|X1=="133041000001"|X1=="133041000005"
+                         |X1=="133041000006"|X1=="13404"|X1=="131041000002"
+                         |X1=="133041000002"|X1=="13109"|X1=="13209"
+                         |X1=="13409"|X1=="131051010101"|X1=="131051010102"
+                         |X1=="131051010103"|X1=="131051010104"|X1=="131051010105"
+                         |X1=="131051010106"|X1=="131051010107"|X1=="13205"
+                         |X1=="133051010101"|X1=="134051010101"|X1=="134051010102"
+                         |X1=="134051010201"|X1=="131051010110"|X1=="131051010111"
+                         |X1=="133051010110"|X1=="133051010111"|X1=="13405"|X1=="13106"|X1=="13206"|X1=="13306"
+                         |X1=="134061010001"|X1=="13107"|X1=="13207"|X1=="13307"
+                         |X1=="134071000001"|X1=="134081030001"|X1=="134081090001"
+                         |X1=="134081090002"|X1=="13111"|X1=="132992000001"
+                         |X1=="13311"|X1=="134112000001"|X1=="13115"|X1=="13215"|X1=="13315"
+                         |X1=="13415"|X1=="134181010501"|X1=="134181010901"
+                         |X1=="13118"|X1=="13218"|X1=="13318"|X1=="134221010101"
+                         |X1=="134221010301"|X1=="134221010302"|X1=="13122"|X1=="13222"
+                         |X1=="13232"|X1=="13308"|X1=="13322"|X1=="132281000012"
+                         |X1=="13128"|X1=="13328"|X1=="133122"
+                         |X1=="13131"|X1=="13231"|X1=="13331"|X1=="134311020001"|X1=="134331000001"
+                         |X1=="134331000002"|X1=="13133"|X1=="13233"|X1=="13333"|X1=="131041000006")[,7],row.names=NULL)
+COLUM2=data.frame(subset(BALANCE,X1=="13134"|X1=="13112"|X1=="13228"|X1=="133051010112"|X1=="13302"|X1=="131051010112"|X1=="13108"|X1=="131021000002"|X1=="13103"|X1=="13203"|X1=="13303"
+                         |X1=="13403"|X1=="131041000001"|X1=="131041000005"|
+                           X1=="13204"|X1=="133041000001"|X1=="133041000005"
+                         |X1=="133041000006"|X1=="13404"|X1=="131041000002"
+                         |X1=="133041000002"|X1=="13109"|X1=="13209"
+                         |X1=="13409"|X1=="131051010101"|X1=="131051010102"
+                         |X1=="131051010103"|X1=="131051010104"|X1=="131051010105"
+                         |X1=="131051010106"|X1=="131051010107"|X1=="13205"
+                         |X1=="133051010101"|X1=="134051010101"|X1=="134051010102"
+                         |X1=="134051010201"|X1=="131051010110"|X1=="131051010111"
+                         |X1=="133051010110"|X1=="133051010111"|X1=="13405"|X1=="13106"|X1=="13206"|X1=="13306"
+                         |X1=="134061010001"|X1=="13107"|X1=="13207"|X1=="13307"
+                         |X1=="134071000001"|X1=="134081030001"|X1=="134081090001"
+                         |X1=="134081090002"|X1=="13111"|X1=="132992000001"
+                         |X1=="13311"|X1=="134112000001"|X1=="13115"|X1=="13215"|X1=="13315"
+                         |X1=="13415"|X1=="134181010501"|X1=="134181010901"
+                         |X1=="13118"|X1=="13218"|X1=="13318"|X1=="134221010101"
+                         |X1=="134221010301"|X1=="134221010302"|X1=="13122"|X1=="13222"
+                         |X1=="13232"|X1=="13308"|X1=="13322"|X1=="132281000012"
+                         |X1=="13128"|X1=="13328"|X1=="133122"
+                         |X1=="13131"|X1=="13231"|X1=="13331"|X1=="134311020001"|X1=="134331000001"
+                         |X1=="134331000002"|X1=="13133"|X1=="13233"|X1=="13333"|X1=="131041000006")[,1],row.names=NULL)
+BALANCE=data.frame(V1=COLUM2,V2=COLUM1)
+BALANCE[,1]=as.numeric(as.vector(BALANCE[,1]))
+BALANCE=data.frame(BALANCE[order(BALANCE[,1]),],row.names=NULL)
+COLUM3=c()
+i=1
+while(i<(dim(BALANCE)[1]+1)){
+  COLUM3[i]=as.matrix(subset(Cuentas,V1==BALANCE[i,1])[2])
+  i=i+1
+}
+BALANCE=data.frame(BALANCE,V3=COLUM3)
+etiq=as.vector(levels(BALANCE[,3]))
+cont=as.numeric(length(etiq))
+sum=matrix(nrow=cont,ncol=2)
+sum[,1]=etiq
+i=1
+while(i<cont+1){
+  t_prod=as.numeric(as.vector(subset(BALANCE,V3==etiq[i])[,2]))
+  sum[i,2]=sum(t_prod)
+  i=i+1
+}
+write.table(sum,file='SALDOS ATPW.csv',dec = ".",sep=";", row.names=FALSE)
+basilea=matrix(nrow=5,ncol=2)
+i=1
+c=c("ESB","HIPOTECARIO","PYMES","OTROS CRÉDITOS","TDC")
+while(i<6){
+  basilea[i,1]=c[i]
+  i=i+1  
+}
+d=as.numeric(sum[,2])
+basilea[1,2]=d[5]+d[10]+d[4]+d[12]+d[2]+d[3]+d[1]+d[8]
+basilea[3,2]=d[13]+d[9]+d[15]
+basilea[2,2]=d[7]
+basilea[4,2]=d[6]+d[16]+d[11]
+basilea[5,2]=d[14]
+basilea=data.frame(basilea,row.names=NULL)
+write.table(basilea,file='SALDOS ATPW BASILEA.csv',dec = ".",sep=";", row.names=FALSE)
+return("Cálculos realizados, guardados en la ruta indicada por el usuario")
+}
+
+
