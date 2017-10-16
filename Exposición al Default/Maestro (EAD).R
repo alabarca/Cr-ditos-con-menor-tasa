@@ -14,16 +14,16 @@ library(RPostgreSQL)
 # create a connection
 # save the password that we can "hide" it as best as we can by collapsing it
 pw <- {
-  "dbbncriskguard"
+  "123456789"
 }
 
 # loads the PostgreSQL driver
 drv <- dbDriver("PostgreSQL")
 # creates a connection to the postgres database
 # note that "con" will be used later in each connection to the database
-con1 <- dbConnect(drv, dbname = "riskguard_production",
-                  host = "192.168.99.4", port = 5432,
-                  user = "consulta", password = pw)
+con1 <- dbConnect(drv, dbname = "risk_credit",
+                  host = "123.456.789", port = 5555,
+                  user = "risk_risk", password = pw)
 rm(pw) # removes the password
 v=paste("select * from rc_carteras_creditos
     where fecha_snapshot = ","'","2017-08-31","'",sep=" ")
@@ -62,8 +62,8 @@ bloque=as.data.frame(matrix(ncol=8,nrow=loop))
 #lll=levels(as.factor(areas$V3))
 names(bloque)=c("codigo","saldo_tdc","limite_tdc","saldo_cartera_comercial","linea_cupo_comercial","saldo_total","linea_cupo_total","EAD")#,ll,lll)
 while(i<loop+1){
-  suma1=subset(tdc,rc_tarjeta_tc_cliente_codigo=="001000421")[,c(19,25)]
-  suma2=subset(comercial,rc_credito_tc_cliente_codigo=="001000421")[,c(5,31,35)]
+  suma1=subset(tdc,rc_tarjeta_tc_cliente_codigo==code[i])[,c(19,25)]
+  suma2=subset(comercial,rc_credito_tc_cliente_codigo==code[i])[,c(5,31,35)]
   suma3=subset(lineas,tc_cliente_codigo=="001000421")[,4]
   x=c(sum(suma1$saldo_capital),sum(suma1$limite_credito))
   y=sum(suma2$saldo_capital)
