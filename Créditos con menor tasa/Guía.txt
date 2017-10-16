@@ -1,0 +1,15 @@
+El código necesita dos archivos de insumo en formato .txt. El objetivo es analizar el comportamiento de las tasas de crédito de un período a otro. Los archivos corresponden al portafolio en la fecha inicial y final respectivamente.
+
+Nombre columnas archivo 1 Y 2 (ruta1 Y 2 respect.): tc_tipo_persona_codigo;numero_documento;nombre;rc_credito_numero_credito;rc_producto_crediticio_codigo;saldo_capital;tasa_interes;fecha_reprecio
+
+Tipo de columnas archivo 1 y 2 (ruta1 Y 2 respect.): character;character;character;character;character;numeric;numeric;character
+
+OBSERVACIÓN: Los archivos puede guardarlo con el nombre y donde desee siempre y cuando coloque bien los parámetros en el código.
+
+Paso1: Abrir los códigos en el programa RStudio:
+
+Primero: corra toda la función con el script Procedimiento.R
+Segundo: Introduzca los parámetros indicados en el archivo Resultado.R y correr la instrucción. 
+
+OBSERVACIÓN: El parámetro "salida" corresponde a la ruta de salida que desee el resultado del análisis de tasas.
+
