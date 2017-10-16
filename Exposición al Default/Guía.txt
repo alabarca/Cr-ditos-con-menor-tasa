@@ -1,0 +1,34 @@
+﻿El código esta construido para calcular la exposición por default del portafolio, crédito a crédito.
+
+Para ello es necesario contar con tres archivos:
+
+.-Nombre variable archivo1: comercial
+
+	Descripción: portafolio de créditos, sin incluir tarjeta de crédito.
+
+	Nombre campos columnas: fecha_snapshot;rc_credito_numero_credito;rc_credito_tc_cliente_codigo;rc_credito_tc_agencia_codigo;saldo_capital;saldo_capital_vigente;saldo_capital_reestructurado;saldo_capital_vencido;saldo_capital_litigio;tasa_interes;cuotas_vencidas;dias_mora;intereses_vigentes;intereses_mora_vigentes;intereses_reestructurados;intereses_vencidos;intereses_cobrados;porcentaje_provision_especifica;porcentaje_provision_generica;porcentaje_provision_rendimiento;monto_provision_especifica;monto_provision_generica;monto_provision_rendimiento;consecutivo;tc_cuenta_contable_codigo;rc_calificacion_codigo_riesgo_credito;rc_calificacion_codigo_riesgo_cliente;rc_calificacion_codigo_riesgo_sicri;rc_situacion_contable_codigo;rc_estado_pago_codigo;rc_producto_crediticio_codigo;fecha_reprecio
+
+	Tipo campos columnas: date;character;character;character;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;character;character;character;numeric;numeric;numeric;character;character;character;character;character;character;numeric;character;date
+
+.-Nombre variable archivo2: tdc	
+	Descripción: portafolio de crédito, sólo tarjeta de crédito.
+
+	Nombre campos columnas: fecha_snapshot;rc_tarjeta_numero_credito;fecha_emision;fecha_vencimiento;fecha_mora;fecha_bloqueo;fecha_cancelacion;fecha_ultimo_pago;fecha_proximo_pago;castigado;tarjeta_numero;rc_tarjeta_tc_cliente_codigo;rc_tarjeta_tc_agencia_codigo;rc_motivo_bloqueo_tarjeta_codigo;rc_motivo_cancelacion_tarjeta_codigo;tc_tipo_cambio_id;tc_cuenta_contable_codigo;tasa_interes;saldo_capital;saldo_capital_vigente;saldo_capital_reestructurado;saldo_capital_vencido;saldo_capital_litigio;meses_financiamiento;limite_credito;dias_mora;interes_por_cobrar;ciclo_facturacion;cantidad_cuotas_vencidas;fecha_reprecio;rc_calificacion_codigo_riesgo_credito;rc_calificacion_codigo_riesgo_cliente;rc_calificacion_codigo_riesgo_sicri;porcentaje_provision_especifica;porcentaje_provision_generica;porcentaje_provision_rendimiento;monto_provision_especifica;monto_provision_generica;monto_provision_rendimiento;rc_situacion_contable_codigo;rc_estado_pago_codigo
+	
+	Tipo campos columnas: date; character; date;date;date;date;date;date;date;character;character;character;character;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;numeric;date;character;character;character;numeric;numeric;numeric;numeric;numeric;numeric;character;character
+
+.-Nombre varibale archivo3: mc
+	Descripción: portafolio histórico de crédito, sin incluir tarjeta de crédito.
+
+	Nombre campos columnas: numero credito, tc_cliente_codigo, tc_agencia_codigo, relacion_crediticia, capital_original, fecha_solicitud, fecha_liquidacion, fecha_vencimiento, cantidad_cuotas, tc_tipo_tasa_interes_id, rc_producto_crediticio_codigo, tc_moneda_codigo, rc_destino_credito_codigo, rc_estado_credito_codigo, tc_periodicidad_codigo, mancomunado
+
+	Tipo campos columnas: character;character;character;character;numeric;date;date;date;numeric;numeric;character;numeric;numeric;numeric;numeric;character
+
+.-Nombre variable archivo4:lineas
+	Descripción: histórico de líneas y autorrenovables, sin incluir tarjeta de crédito.
+
+	Nombre campos columnas: id, codigo, nombre, monto, fecha_vencimiento, tc_cliente_codigo, rc_estado_credito_codigo, rc_tipo_linea_credito_codigo, tc_cuenta_contable_codigo
+
+	Tipo campos columnas: numeric; character; character; numeric; date; character;numeric; numeric; numeric
+
+El parámetro gamma (variable g) es aquel que dispone del riesgo no dispuesto. Esta fijado en 0.625, sin embargo, el estándar es 0.75.	
